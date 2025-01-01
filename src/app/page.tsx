@@ -1,9 +1,15 @@
-import { Button } from "@/components/ui/button";
+import { fetchPages } from "@/lib/notion";
 
-export default function Home() {
+export default async function Home() {
+  const posts = await fetchPages();
+
   return (
-    <div>
-      <Button>Click me</Button>
-    </div>
+    <main className="">
+      {posts.results.map((post: any) => (
+        <article key={post.id}>
+          <h2>{post.properties.Title.title[0].plain_text}</h2>
+        </article>
+      ))}
+    </main>
   );
 }
